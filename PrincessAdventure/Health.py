@@ -15,7 +15,7 @@ class health(pygame.sprite.Sprite):
         self.image.set_colorkey(variables.WHITE)
         self.rect = self.image.get_rect()
         self.x = random.randrange(1024)
-        self.y = random.randrange(700)
+        self.y = random.randrange(300,700)
         self.rect.x = self.x
         self.rect.y = self.y
         self.time = 500

@@ -13,10 +13,10 @@ class arrow(pygame.sprite.Sprite):
         self.image = pygame.image.load("Sprites/arrow.png").convert()
         self.image.set_colorkey(variables.WHITE)
         self.rect = self.image.get_rect()
-        self.change_x = -5
+        self.change_x = -10
         self.change_y = 0
         self.x = random.randrange(1000,1500)
-        self.y = random.randrange(700)
+        self.y = random.randrange(300,680)
         self.rect.x = self.x
         self.rect.y = self.y
         

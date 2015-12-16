@@ -1,0 +1,21 @@
+for at få tiden
+http://www.tutorialspoint.com/python/time_clock.htm
+
+import time
+
+t = time.time()
+time_played = time.time() - t
+
+For at pause 
+def pause(self):
+	while True:
+		if space er trykket:
+			return
+		else: continue
+		måske update hele skærm billedet?
+
+def die(self):
+	skriv dø, det skal være muligt at starte forfra.
+
+Når man starter gamet skal det være muligt at 
+

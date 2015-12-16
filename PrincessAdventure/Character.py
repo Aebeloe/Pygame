@@ -3,9 +3,11 @@ Created on 17/07/2015
 
 @author: Mads
 '''
+# tobiasj1991@gmail.com
+# m.aebeloe@gmail.com
+
 import pygame 
 import Variables as variables
-import Vector
 
 class Character(pygame.sprite.Sprite):
     def __init__(self, image, colorKEY):
@@ -40,30 +42,6 @@ class Character(pygame.sprite.Sprite):
     def change_direction(self, image, colorKEY):
         self.image = image
         self.image.set_colorkey(colorKEY)
-    
-    def enemy_move(self, Target_x, Target_y):
-        if Target_x < self.x:
-            self.change_x = -7
-        elif Target_x > self.x:
-            self.change_x = 7
-        else:
-            self.change_x = 0
-            
-        if Target_y < self.y:
-            self.change_y = -7
-        elif Target_y > self.y:
-            self.change_y = 7
-        else:
-            self.change_y = 0
-            
-    def red_Dot_Move(self, Target_x, Target_y):
-        vec = Vector.vector([self.x,self.y],[Target_x, Target_y])
-        x, y = vec.unit()
-        self.change_x = x * 3 
-        self.change_y = y * 3
-        
-        
-        
-        
-        
-        
+
+    def sword_swing(self, direction, screen):
+        return
