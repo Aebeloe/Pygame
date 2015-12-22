@@ -51,7 +51,6 @@ class Game():
                         continue
                 if event.type == pygame.QUIT:
                     done = True
-
             
             text = self.welcome_font.render('Velkommen til Princess Adventure', True, variables.BLUE)
             draw_screen(self.screen, self.background_image)
@@ -76,20 +75,12 @@ class Instance():
         self.PRINCESS_BACK_image = pygame.image.load("Sprites/princess_back.png").convert()
         self.PRINCESS_LEFT_image = pygame.image.load("Sprites/princess_left.png").convert()
         self.PRINCESS_RIGHT_image = pygame.image.load("Sprites/princess_right.png").convert()
-        self.enemy_image = pygame.image.load("Sprites/enemy.png").convert()
-        self.RED_DOT_image = pygame.image.load("Sprites/red_dot.png").convert()
-        self.CANNON_image = pygame.image.load("Sprites/Cannon_ready.jpg").convert()
-        self.CANNON_image.set_colorkey(variables.WHITE)
-        self.CANNON_FIRE_image = pygame.image.load("Sprites/fire.jpg").convert()
-        self.CANNON_FIRE_image.set_colorkey(variables.WHITE)
 
         self.clock = pygame.time.Clock()
         self.background_image = pygame.image.load(variables.BACKGROUND_IMAGE).convert()
         self.back_button = pygbutton.PygButton((0, 0, 50, 40), 'Back')
 
         self.Princess = char.Character(self.PRINCESS_FRONT_image, variables.PRINCESS_BACKGROUND_FRONT)
-        self.Enemy_1 = Enemy.enemy(self.enemy_image, variables.WHITE)
-        self.Enemy_2 = Enemy.enemy(self.enemy_image, variables.WHITE)
     
         self.Enemy_1.x = 600
         self.Enemy_1.y = 236
@@ -97,31 +88,22 @@ class Instance():
         self.Enemy_2.y = 534
     
         self.all_sprites_list = pygame.sprite.Group()
-        self.all_arrows = pygame.sprite.Group()
+
         self.all_health = pygame.sprite.Group()
         self.all_enemies = pygame.sprite.Group()
         self.all_red_dots = pygame.sprite.Group()
-        #move_ables= pygame.sprite.Group() en god ide hvis man har ting der aldrig skal beveage sig ellers skal alle sprites have move()
     
         self.all_sprites_list.add(self.Princess)
-        #self.all_sprites_list.add(Enemy_1)
-        #self.all_sprites_list.add(Enemy_2)
-        #self.all_enemies.add(Enemy_1)
-        #self.all_enemies.add(Enemy_2)
         self.font = pygame.font.Font("C:/Windows/Fonts/Gabriola.TTF",25)
 
-        ANTAL_PILE = 10
-        for i in range(ANTAL_PILE ):
-            a = Arrow.arrow()
-            self.all_arrows.add(a)
-            self.all_sprites_list.add(a)
+
     
     def pregame(self):
         done = False
         while not done:
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
-                    return self.main()
+                    return self.game_arrow_rain()
                 if event.type == pygame.QUIT:
                     return {'text': 'quit'}
             text = self.font.render("Tryk på en knap for at starte", True, variables.BLUE)
@@ -131,6 +113,17 @@ class Instance():
             self.clock.tick(variables.fps)
 
     def main(self):
+        msg = self.game_arrow_rain()
+        if msg['text'] != "contine":
+            return msg
+
+    def game_arrow_rain(self):
+        self.RED_DOT_image = pygame.image.load("Sprites/red_dot.png").convert()
+        self.CANNON_image = pygame.image.load("Sprites/Cannon_ready.jpg").convert()
+        self.CANNON_image.set_colorkey(variables.WHITE)
+        self.CANNON_FIRE_image = pygame.image.load("Sprites/fire.jpg").convert()
+        self.CANNON_FIRE_image.set_colorkey(variables.WHITE)
+
         health_count = 0    
         red_dot_time = 0
         red_dot_interval = 500 #Hvor hurtigt kommer de røde bolde
@@ -142,6 +135,15 @@ class Instance():
         frames = 0
         paused = False
         draw_fire = 0
+        self.all_arrows = pygame.sprite.Group()
+
+        ANTAL_PILE = 10
+        for i in range(ANTAL_PILE ):
+            a = Arrow.arrow()
+            self.all_arrows.add(a)
+            self.all_sprites_list.add(a)
+
+
         while not done:
             for event in pygame.event.get():
                 if 'click' in self.back_button.handleEvent(event):
@@ -284,81 +286,6 @@ class Instance():
             self.clock.tick(variables.fps)
 
         return
-
-class Ildkugler():
-    def __init__(self, screen, Princess):
-        self.Princess = Princess
-        self.screen = screen
-        self.all_sprites_list = pygame.sprite.Group()
-        self.all_ildkugler = pygame.sprite.Group()
-        self.clock = pygame.time.Clock()
-        self.background_image = pygame.image.load(variables.BACKGROUND_IMAGE).convert()
-        self.back_button = pygbutton.PygButton((0, 0, 50, 40), 'Back')
-    
-    def main():
-        while not done:
-            for event in pygame.event.get():
-                if 'click' in self.back_button.handleEvent(event):
-                    return {'text': 'back', 'score': score}
-                if event.type == pygame.QUIT:
-                    return {'text': 'quit'}
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_DOWN:
-                        self.Princess.change_y = self.Princess.speed
-                        self.Princess.change_direction(self.PRINCESS_FRONT_image, variables.PRINCESS_BACKGROUND_FRONT)
-                    if event.key == pygame.K_LEFT:
-                            self.Princess.change_x = -self.Princess.speed
-                            self.Princess.change_direction(self.PRINCESS_RIGHT_image, variables.PRINCESS_BACKGROUND_BACK)
-                    if event.key == pygame.K_RIGHT:
-                        self.Princess.change_x = self.Princess.speed
-                        self.Princess.change_direction(self.PRINCESS_LEFT_image, variables.PRINCESS_BACKGROUND_BACK)
-                    if event.key == pygame.K_UP:
-                        self.Princess.change_y = -self.Princess.speed 
-                        self.Princess.change_direction(self.PRINCESS_BACK_image, variables.PRINCESS_BACKGROUND_BACK)
-                    if event.key == pygame.K_SPACE:
-                        paused = True
-                if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_LEFT:
-                        self.Princess.change_x = 0
-                    if event.key == pygame.K_RIGHT:
-                        self.Princess.change_x = 0
-                    if event.key == pygame.K_UP:
-                        self.Princess.change_y = 0
-                    if event.key == pygame.K_DOWN:
-                        self.Princess.change_y = 0
-            if self.Princess.x < 10:
-                if self.Princess.change_x < 0:
-                    self.Princess.change_x = 0
-            if self.Princess.x > 1014:
-                if self.Princess.change_x > 0:
-                    self.Princess.change_x = 0
-            if self.Princess.y < 310:
-                if self.Princess.change_y < 0:
-                    self.Princess.change_y = 0
-            if self.Princess.y > 670:
-                if self.Princess.change_y > 0:     
-                    self.Princess.change_y = 0
-
-            if paused:
-                while paused:
-                    for event in pygame.event.get():
-                        if 'click' in self.back_button.handleEvent(event):
-                            return {'text': 'back', 'score': score}
-                        if event.type == pygame.KEYDOWN:
-                            if event.key == pygame.K_SPACE:
-                                paused = False
-                                break
-                        if event.type == pygame.QUIT:
-                            return {'text': 'quit'}
-
-            paused = False
-            
-            self.back_button.draw(self.screen)
-            for sprite in self.all_sprites_list:
-                sprite.draw(self.screen)
-            
-            pygame.display.flip()
-            self.clock.tick(variables.fps)
         
 if __name__ == "__main__":
     game = Game()
