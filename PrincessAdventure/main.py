@@ -81,12 +81,7 @@ class Instance():
         self.back_button = pygbutton.PygButton((0, 0, 50, 40), 'Back')
 
         self.Princess = char.Character(self.PRINCESS_FRONT_image, variables.PRINCESS_BACKGROUND_FRONT)
-    
-        self.Enemy_1.x = 600
-        self.Enemy_1.y = 236
-        self.Enemy_2.x = 342
-        self.Enemy_2.y = 534
-    
+        
         self.all_sprites_list = pygame.sprite.Group()
 
         self.all_health = pygame.sprite.Group()
