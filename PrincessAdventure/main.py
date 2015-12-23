@@ -81,6 +81,8 @@ class Instance():
         self.CANNON_FIRE_image = pygame.image.load("Sprites/fire.jpg").convert()
         self.CANNON_FIRE_image.set_colorkey(variables.WHITE)
 
+        self.FIREBALL_image = pygame.image.load("Sprites/red_dot.png").convert()
+
         self.clock = pygame.time.Clock()
         self.background_image = pygame.image.load(variables.BACKGROUND_IMAGE).convert()
         self.back_button = pygbutton.PygButton((0, 0, 50, 40), 'Back')
@@ -114,6 +116,8 @@ class Instance():
     
         self.frames = 0
         self.draw_fire = 0
+
+        
 
     def pregame(self):
         done = False
@@ -191,6 +195,9 @@ class Instance():
 
             pygame.display.flip()
             self.clock.tick(variables.fps)
+    
+    def fire_rain(self):
+
 
     def game_arrow_rain(self):    
         red_dot_interval = 500 #Hvor hurtigt kommer de røde bolde
